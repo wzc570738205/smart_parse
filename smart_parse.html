@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+	</style>
+</head>
+<body>
+<h2>支持以下数据格式（打印结果请在控制台查看）</h2>
+	<p>王志超,1351111111,陕西省西安市雁塔区创业咖啡街区海归楼3楼</p>
+	<p>王志超1351111111陕西省西安市雁塔区创业咖啡街区海归楼3楼</p>
+	<p>陕西省西安市雁塔区创业咖啡街区海归楼3楼1351111111王志超</p>
+	<p>陕西省西安市雁塔区创业咖啡街区海归楼3楼150-0000-0000王志超</p>
+	<textarea onchange="smart_parse()" cols="50" rows="10"></textarea> 
+	<div id="value">
+	</div>
+</body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script src="area-list.js"></script>
+<script src="address-parse.js"></script>
+<script>
+	parseArea(areaList)
+	function smart_parse(){
+		let value = $('textarea').val();
+		console.log(parse(value));
+		let html= '';
+		for(let key in parse(value)){
+			if(parse(value)[key]){
+			   html+=`<p>`+key+`:`+parse(value)[key]+`</p>`
+			}
+		}
+		console.log(html);
+		$('#value').html(html)
+	}
+</script>
