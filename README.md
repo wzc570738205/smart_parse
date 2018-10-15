@@ -1,6 +1,9 @@
 # 智能识别收货地址
+# 预览地址https://wzc570738205.github.io/boke/smartparse.html
 javascript 收货地址智能识别
+
 ## 执行parse之前必须操作一次parseArea生成专用数据
+
 ## 数据来源(如有更新请更新此js)
 ```
 area-list.js
@@ -11,6 +14,7 @@ area-list.js
 2. 马云1351111111北京市朝阳区姚家园3楼
 3. 北京市朝阳区姚家园3楼1351111111马云
 4. 北京市朝阳区姚家园3楼150-0000-0000马云
+
 ## 生成数据格式
 ```
 {
@@ -26,4 +30,4 @@ result: undefined
 zip_code: ""
 }
 ```
-### 预览地址https://wzc570738205.github.io/boke/smartparse.html
+
