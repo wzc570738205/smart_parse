@@ -1,7 +1,7 @@
 # 智能识别收货地址
 预览地址https://wzc570738205.github.io/boke/smartparse.html
 
-## 执行parse之前必须操作一次parseArea生成专用数据
+
 
 ## 地址数据来源(如有更新请更新此js)
 ```
