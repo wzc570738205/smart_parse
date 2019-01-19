@@ -45,6 +45,28 @@ function parseArea(list, init) {
     }
   });
 }
+/**
+ * 解析邮编
+ * @param
+ * @returns <array>
+ */
+function zipCodeFormat() {
+  let list = []
+  zipCode.forEach((el) => {
+    if (el.child) {
+      el.child.forEach((event) => {
+        if (event.child) {
+          event.child.forEach(element => {
+            list.push(element.zipcode)
+          })
+        }
+
+      })
+    }
+  })
+  return list;
+}
+let zipCodeList = zipCodeFormat();
 
 /**
  * 解析
@@ -90,18 +112,32 @@ function parse(address) {
     parse.phone = phone[0];
     address = address.replace(phone[0], ' ')
   }
-  //邮编
-  const zipReg = /([0-9]{6})/g;
-  const zip = zipReg.exec(address);
-  if (zip) {
-    parse.zip_code = zip[0];
-    address = address.replace(zip[0], '')
+
+  //邮编(加入门牌号；考虑到重复邮编问题；去除之前简单的六位数字校验)
+
+  for (let index = 0; index < zipCodeList.length; index++) {
+    if (address.indexOf(zipCodeList[index]) != -1) {
+      let num = address.indexOf(zipCodeList[index]);
+      let code = address.slice(num, num + 6);
+      parse.zip_code = code;
+      address = address.replace(code, '')
+    }
   }
 
+
+  /*   废弃
+    const zipReg = /([0-9]{6})/g;
+    const zip = zipReg.exec(address);
+    if (zip) {
+      parse.zip_code = zip[0];
+      address = address.replace(zip[0], '')
+    } 
+  */
+
   address = address.replace(/ {2,}/, ' ');
+  //console.log(address)
 
   let detail = detail_parse_forward(address.trim());
-
   if (!detail.city) {
     detail = detail_parse(address.trim());
     if (detail.area && !detail.city) {
@@ -110,10 +146,13 @@ function parse(address) {
       });
       console.log('smart_parse->ignoreArea（忽略区）');
     } else {
-      console.log('smart_parse');
+      // console.log('smart_parse');
     }
     //这个待完善
     const list = address.replace(detail.province, '').replace(detail.city, '').replace(detail.area, '').split(' ').filter(str => str);
+    //详细住址划分关键字
+    //注意：只需要填写关键字最后一位即可：比如单元填写元即可！
+    const address_detail_list = ['室', '楼', '元', '号', '幢', '门', '户'];
     if (list.length > 1) {
       list.forEach(str => {
         if (!parse.name || str && str.length < parse.name.length) {
@@ -122,6 +161,21 @@ function parse(address) {
       });
       if (parse.name) {
         detail.addr = detail.addr.replace(parse.name, '').trim()
+      }
+    } else {//若名字写在详细地址后面，根据address_detail_list进行分割；
+      let key = [];
+      address_detail_list.forEach((el) => {
+        key.push(detail.addr.indexOf(el))
+      })
+      var max = key.sort(function (a, b) {
+        return b - a;
+      })[0];
+      if (max != -1) {
+        let addrBuild = detail.addr.slice(0, max + 1);
+        let addrNum = detail.addr.replace(addrBuild, '').replace(/[^0-9]+/g, '');
+        let userName = detail.addr.replace(addrBuild + addrNum, '')
+        detail.addr = addrBuild + addrNum
+        parse.name = userName
       }
     }
   } else {
@@ -137,7 +191,6 @@ function parse(address) {
       }
     }
   }
-
   parse.province = detail.province;
   parse.city = detail.city;
   parse.area = detail.area;
