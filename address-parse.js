@@ -52,7 +52,7 @@ function parseArea(list, init) {
  * @returns {{name: string, mobile: string, detail: string, zip_code: string, phone: string}}
  */
 function parse(address) {
-    address=address||'';
+  address = address || '';
   const parse = {
     name: '',
     mobile: '',
@@ -61,15 +61,18 @@ function parse(address) {
     phone: ''
   };
 
-  address = address.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
 
-  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。',];
+  //去除空格...
+  address = address.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
+  address = address.replace(/\s+/g, "");
+  //自定义去除关键字，可自行添加
+  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。', ];
   search.forEach(str => {
     address = address.replace(new RegExp(str, 'g'), ' ')
   });
-
+  //多个空格replace为一个
   address = address.replace(/ {2,}/g, ' ');
-
+  //整理电话格式
   address = address.replace(/(\d{3})-(\d{4})-(\d{4})/g, '$1$2$3');
 
   address = address.replace(/(\d{3}) (\d{4}) (\d{4})/g, '$1$2$3');
@@ -80,14 +83,14 @@ function parse(address) {
     parse.mobile = mobile[0];
     address = address.replace(mobile[0], ' ')
   }
-
+  //电话
   const phoneReg = /(([0-9]{3,4}-)[0-9]{7,8})|([0-9]{12})|([0-9]{11})|([0-9]{10})|([0-9]{9})|([0-9]{8})|([0-9]{7})/g;
   const phone = phoneReg.exec(address);
   if (phone) {
     parse.phone = phone[0];
     address = address.replace(phone[0], ' ')
   }
-
+  //邮编
   const zipReg = /([0-9]{6})/g;
   const zip = zipReg.exec(address);
   if (zip) {
@@ -97,7 +100,6 @@ function parse(address) {
 
   address = address.replace(/ {2,}/, ' ');
 
-  // console.log(address)
   let detail = detail_parse_forward(address.trim());
 
   if (!detail.city) {
@@ -106,8 +108,8 @@ function parse(address) {
       detail = detail_parse(address.trim(), {
         ignoreArea: true
       });
-      console.log('smart_parse->ignoreArea');
-    }else{
+      console.log('smart_parse->ignoreArea（忽略区）');
+    } else {
       console.log('smart_parse');
     }
     //这个待完善
@@ -218,7 +220,9 @@ function detail_parse_forward(address) {
  * @param ignoreArea 是否忽视区 因为地址中含有区容易导致匹配错误 例：山东省蓬莱市黄海花园东区西门宝威学堂 曲荣声收15753572456
  * @returns {{province: string, city: string, area: string, name: string, _area: string, addr: string}}
  */
-function detail_parse(address, {ignoreArea = false} = {}) {
+function detail_parse(address, {
+  ignoreArea = false
+} = {}) {
   const parse = {
     province: '',
     city: '',
