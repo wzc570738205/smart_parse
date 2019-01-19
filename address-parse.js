@@ -66,7 +66,11 @@ function zipCodeFormat() {
   })
   return list;
 }
-let zipCodeList = zipCodeFormat();
+
+//专用数据处理
+
+let zipCodeList = zipCodeFormat();//邮编
+parseArea(areaList);//地址
 
 /**
  * 解析
