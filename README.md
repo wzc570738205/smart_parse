@@ -1,5 +1,6 @@
-# 智能识别收货地址
 
+# 智能识别收货地址
+<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 ## 点击此处预览：[预览地址](https://wzc570738205.github.io/boke/smartparse.html)
 
 
