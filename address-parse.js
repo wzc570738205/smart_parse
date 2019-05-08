@@ -92,7 +92,7 @@ function parse(address) {
   address = address.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
   address = address.replace(/\s+/g, "");
   //自定义去除关键字，可自行添加
-  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。', ];
+  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。'];
   search.forEach(str => {
     address = address.replace(new RegExp(str, 'g'), ' ')
   });
@@ -139,9 +139,10 @@ function parse(address) {
   */
 
   address = address.replace(/ {2,}/, ' ');
-  //console.log(address)
 
   let detail = detail_parse_forward(address.trim());
+  var ignoreArea = detail.province;
+
   if (!detail.city) {
     detail = detail_parse(address.trim());
     if (detail.area && !detail.city) {
@@ -195,7 +196,7 @@ function parse(address) {
       }
     }
   }
-  parse.province = detail.province;
+  parse.province = detail.province == '' ? ignoreArea : detail.province;
   parse.city = detail.city;
   parse.area = detail.area;
   parse.addr = detail.addr;
