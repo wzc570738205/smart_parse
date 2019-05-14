@@ -318,11 +318,10 @@ function detail_parse(address, {
       }
     }
     parse.addr = address.substr(areaIndex + 1);
-
   } else {
     if (address.indexOf('市') > -1) {
       areaIndex = address.indexOf('市');
-      parse.area = address.substr(areaIndex - 2, 3);
+      parse.area = address.substr(0, areaIndex + 1);
       parse.addr = address.substr(areaIndex + 1);
     } else {
       parse.addr = address
@@ -331,18 +330,17 @@ function detail_parse(address, {
 
   if (address.indexOf('市') > -1 || address.indexOf('盟') > -1 || address.indexOf('州') > -1) {
     if (address.indexOf('市') > -1) {
-      parse._area = address.substr(address.indexOf('市') - 2, 2);
+      parse._area = address.substr(address.indexOf('市') - address.indexOf('市'), address.indexOf('市'));
     }
     if (address.indexOf('盟') > -1 && !mCity[parse._area]) {
-      parse._area = address.substr(address.indexOf('盟') - 2, 2);
+      parse._area = address.substr(address.indexOf('盟') - address.indexOf('盟'), address.indexOf('盟'));
     }
     if (address.indexOf('州') > -1 && !mCity[parse._area]) {
-      parse._area = address.substr(address.indexOf('州') - 2, 2);
+      parse._area = address.substr(address.indexOf('州') - address.indexOf('州'), address.indexOf('州'));
     }
   }
 
   parse.area = parse.area.trim();
-
   if (parse.area && mArea[parse.area]) {
     if (mArea[parse.area].length === 1) {
       parse.province = mArea[parse.area][0].p;
@@ -383,7 +381,3 @@ function detail_parse(address, {
   parse.addr = parse.addr.trim();
   return parse
 }
-
-/*export {parseArea}
-
-export default parse;*/
