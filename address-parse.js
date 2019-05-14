@@ -142,7 +142,6 @@ function parse(address) {
 
   let detail = detail_parse_forward(address.trim());
   var ignoreArea = detail.province;
-
   if (!detail.city) {
     detail = detail_parse(address.trim());
     if (detail.area && !detail.city) {
@@ -175,6 +174,9 @@ function parse(address) {
       var max = key.sort(function (a, b) {
         return b - a;
       })[0];
+      if (detail.name) {
+        parse.name = detail.name
+      }
       if (max != -1) {
         let addrBuild = detail.addr.slice(0, max + 1);
         let addrNum = detail.addr.replace(addrBuild, '').replace(/[^0-9]+/g, '');
@@ -318,11 +320,22 @@ function detail_parse(address, {
       }
     }
     parse.addr = address.substr(areaIndex + 1);
+
   } else {
     if (address.indexOf('市') > -1) {
       areaIndex = address.indexOf('市');
-      parse.area = address.substr(0, areaIndex + 1);
-      parse.addr = address.substr(areaIndex + 1);
+      console.log(address.split(" "))
+      if (address.split(" ")[0].indexOf("市") > -1) {
+        let areindex = address.split(" ")[0].indexOf("市")
+        parse.area = address.split(" ")[0].substr(0, areindex + 1);
+        parse.addr = address.split(" ")[0].substr(areindex + 1);
+        parse.name  = address.split(" ")[1]
+      } else {
+        let areindex = address.split(" ")[1].indexOf("市")
+        parse.area = address.split(" ")[1].substr(0, areindex + 1);
+        parse.addr = address.split(" ")[1].substr(areindex + 1);
+        parse.name  = address.split(" ")[0]
+      }
     } else {
       parse.addr = address
     }
@@ -330,13 +343,13 @@ function detail_parse(address, {
 
   if (address.indexOf('市') > -1 || address.indexOf('盟') > -1 || address.indexOf('州') > -1) {
     if (address.indexOf('市') > -1) {
-      parse._area = address.substr(address.indexOf('市') - address.indexOf('市'), address.indexOf('市'));
+      parse._area = address.substr(address.indexOf('市') - 2, 2);
     }
     if (address.indexOf('盟') > -1 && !mCity[parse._area]) {
-      parse._area = address.substr(address.indexOf('盟') - address.indexOf('盟'), address.indexOf('盟'));
+      parse._area = address.substr(address.indexOf('盟') - 2, 2);
     }
     if (address.indexOf('州') > -1 && !mCity[parse._area]) {
-      parse._area = address.substr(address.indexOf('州') - address.indexOf('州'), address.indexOf('州'));
+      parse._area = address.substr(address.indexOf('州') - 2, 2);
     }
   }
 
@@ -381,3 +394,7 @@ function detail_parse(address, {
   parse.addr = parse.addr.trim();
   return parse
 }
+
+/*export {parseArea}
+
+export default parse;*/
