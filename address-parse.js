@@ -203,6 +203,23 @@ function parse(address) {
   parse.area = detail.area;
   parse.addr = detail.addr;
   parse.result = detail.result;
+  //添加省以及市（2019.6.21）输出字段后填入省市等等
+  foramtProvince.forEach(el => {
+    if (el.name.indexOf(parse.province) == 0) {
+      parse.province = el.name
+    }
+  })
+  zipCode.forEach(provice => {
+    if (parse.province.indexOf(provice.name) == 0) {
+      provice.child.forEach(city => {
+        if (city.name.indexOf(parse.city) == 0) {
+          parse.city = city.name
+        }
+      })
+    }
+   
+  })
+  
   return parse;
 }
 
