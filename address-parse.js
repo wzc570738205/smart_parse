@@ -89,10 +89,10 @@ function parse(address) {
 
 
   //去除空格...
-  address = address.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
-  address = address.replace(/\s+/g, "");
+/*   address = address.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
+  address = address.replace(/\s+/g, ""); */
   //自定义去除关键字，可自行添加
-  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。'];
+  const search = ['地址', '收货地址', '收货人', '收件人', '收货', '邮编', '电话', '：', ':', '；', ';', '，', ',', '。',' '];
   search.forEach(str => {
     address = address.replace(new RegExp(str, 'g'), ' ')
   });
