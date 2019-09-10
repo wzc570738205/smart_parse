@@ -38,6 +38,7 @@ result: undefined
 zip_code: ""
 }
 ```
-##### [参考链接（php）]（https://github.com/pupuk/address-smart-parse ）
-##### [地址数据来源]（https://github.com/modood/Administrative-divisions-of-China ）
+
+##### [参考链接（php](https://github.com/pupuk/address-smart-parse)
+##### [地址数据来源](https://github.com/modood/Administrative-divisions-of-China)
 
