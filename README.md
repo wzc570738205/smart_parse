@@ -39,6 +39,6 @@ zip_code: ""
 }
 ```
 
-##### 参考链接：（php) [PHP&&GO版本](https://github.com/pupuk/address-smart-parse)
+##### 参考链接： [PHP&&GO版本](https://github.com/pupuk/address-smart-parse)
 ##### 地址数据来源：[中华人民共和国行政区划](https://github.com/modood/Administrative-divisions-of-China)
 
