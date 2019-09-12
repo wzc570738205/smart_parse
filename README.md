@@ -1,4 +1,6 @@
-
+# 此项目已不再维护，请移步最新地址：详情[地址智能识别](https://github.com/wzc570738205/smartParsePro)
+# 此项目已不再维护，请移步最新地址：详情[地址智能识别](https://github.com/wzc570738205/smartParsePro)
+# 此项目已不再维护，请移步最新地址：详情[地址智能识别](https://github.com/wzc570738205/smartParsePro)
 ## 智能识别收货地址最新版支持街道识别，详情[地址智能识别](https://github.com/wzc570738205/smartParsePro)
 ## 点击此处预览：[预览地址](https://wzc570738205.github.io/smart_parse/)
 ## 欢迎加群：[749539640](https://jq.qq.com/?_wv=1027&k=55bQp1O)
