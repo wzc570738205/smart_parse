@@ -1,6 +1,6 @@
 # 此项目已不再维护，请移步最新地址：[地址智能识别](https://github.com/wzc570738205/smartParsePro)
 ## 点击此处预览：[预览地址](https://wzc570738205.github.io/smart_parse/)
-## 欢迎加群：[749539640](https://jq.qq.com/?_wv=1027&k=55bQp1O)
+## 欢迎加QQ群：978775008
 
 ## 地址数据来源(如有更新请更新此js)
 ```
